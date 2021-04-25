@@ -2,7 +2,8 @@ import React, { useState } from "react";
 import Modal from "react-bootstrap/Modal";
 import Button from "react-bootstrap/Button";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faBroom, faPlus } from "@fortawesome/free-solid-svg-icons";
+import { faBroom, faPlus, faCoffee } from "@fortawesome/free-solid-svg-icons";
+import axios from "axios";
 
 function CreateArea(props) {
   const [show, setShow] = useState(false);
@@ -50,7 +51,11 @@ function CreateArea(props) {
       isExpanded: false,
       isShow: true,
     });
+    console.log(note);
     event.preventDefault();
+
+    axios.post('http://localhost:5000/notes/add', note)
+    .then(res => console.log(res.data));
   }
 
   return (
@@ -77,7 +82,7 @@ function CreateArea(props) {
           <FontAwesomeIcon icon={faBroom} />
         </button>
         <h1>
-          <FontAwesomeIcon icon="faCoffee" />
+          <FontAwesomeIcon icon={faCoffee} />
         </h1>
         <Modal show={show} onHide={handleClose}>
           <Modal.Body>
@@ -88,7 +93,8 @@ function CreateArea(props) {
               Cancel
             </Button>
             <Button
-              variant="primary" style={{backgroundColor: "#f5ba13"}}
+              variant="primary"
+              style={{ backgroundColor: "#f5ba13" }}
               onClick={(event) => {
                 handleClose(event);
                 handleClear(event);
